@@ -70,6 +70,16 @@
         "typeinfo": "cpp",
         "unordered_map": "cpp",
         "utility": "cpp",
-        "vector": "cpp"
+        "vector": "cpp",
+        "thread": "cpp",
+        "clocale": "cpp",
+        "condition_variable": "cpp",
+        "forward_list": "cpp",
+        "numeric": "cpp",
+        "regex": "cpp",
+        "valarray": "cpp",
+        "variant": "cpp",
+        "typeindex": "cpp",
+        "*.ipp": "cpp"
     }
 }

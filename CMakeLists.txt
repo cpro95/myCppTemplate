@@ -7,10 +7,10 @@
 cmake_minimum_required(VERSION 3.1) # for "CMAKE_CXX_STANDARD" version
 project(myCppTemplate VERSION 2.0)
 
-set(CMAKE_BUILD_TYPE Release)
+set(CMAKE_BUILD_TYPE Debug)
 
 # SQLiteC++ 3.x now requires C++11 compiler
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 ## Build the C++ Wrapper ##
@@ -50,10 +50,10 @@ add_library(SQLiteCpp STATIC ${SQLITECPP_SRC} ${SQLITECPP_INC})
 
 # Native File Dialog
 # list of sources files of the library
-set(NATIVEFILEDIALOG_SRC
-    ${PROJECT_SOURCE_DIR}/Third_Party/nativefiledialog/nfd_common.c
-    ${PROJECT_SOURCE_DIR}/Third_Party/nativefiledialog/nfd_cocoa.m
-)
+# set(NATIVEFILEDIALOG_SRC
+#     ${PROJECT_SOURCE_DIR}/Third_Party/nativefiledialog/nfd_common.c
+#     ${PROJECT_SOURCE_DIR}/Third_Party/nativefiledialog/nfd_cocoa.m
+# )
 # list(APPEND SOURCES ${PROJECT_SOURCE_DIR}/Third_Party/nativefiledialog/nfd_win.cpp)
 # list(APPEND SOURCES ${PROJECT_SOURCE_DIR}/Third_Party/nativefiledialog/nfd_cocoa.m)
 # list(APPEND SOURCES ${PROJECT_SOURCE_DIR}/Third_Party/nativefiledialog/nfd_gtk.c)
@@ -61,27 +61,30 @@ set(NATIVEFILEDIALOG_SRC
 # source_group(src FILES ${NATIVEFILEDIALOG_SRC})
 
 # list of header files of the library
-set(NATIVEFILEDIALOG_INC
- ${PROJECT_SOURCE_DIR}/Third_Party/nativefiledialog/common.h
- ${PROJECT_SOURCE_DIR}/Third_Party/nativefiledialog/nfd_common.h
-)
+# set(NATIVEFILEDIALOG_INC
+#  ${PROJECT_SOURCE_DIR}/Third_Party/nativefiledialog/common.h
+#  ${PROJECT_SOURCE_DIR}/Third_Party/nativefiledialog/nfd_common.h
+# )
 # source_group(include FILES ${NATIVEFILEDIALOG_INC})
 
 # add sources of the wrapper as a "NativeFileDialog" static library
-add_library(nfd STATIC ${NATIVEFILEDIALOG_SRC} ${NATIVEFILEDIALOG_INC})
+# add_library(nfd STATIC ${NATIVEFILEDIALOG_SRC} ${NATIVEFILEDIALOG_INC})
 
-# # add library sqlite3
+# add library sqlite3
 add_library(sqlite3 STATIC
-    ${CMAKE_SOURCE_DIR}/Third_Party/SQLiteCpp/sqlite3/sqlite3.c
+    ${CMAKE_SOURCE_DIR}/Third_Party/sqlite3/sqlite3.c
 )
 
 # include directories
 include_directories(
     ${CMAKE_SOURCE_DIR}/Third_Party/SQLiteCpp/include
-    ${CMAKE_SOURCE_DIR}/Third_Party/SQLiteCpp/sqlite3
     ${CMAKE_SOURCE_DIR}/Third_Party/RapidJson
-    ${CMAKE_SOURCE_DIR}/Third_Party/nativefiledialog/include
-    ${CMAKE_SOURCE_DIR}/Third_Party/nativefiledialog
+    # ${CMAKE_SOURCE_DIR}/Third_Party/nativefiledialog/include
+    # ${CMAKE_SOURCE_DIR}/Third_Party/nativefiledialog
+    ${CMAKE_SOURCE_DIR}/Third_Party/spdlog
+    ${CMAKE_SOURCE_DIR}/Third_Party/tabulate
+    ${CMAKE_SOURCE_DIR}/Third_Party/sqlite3pp
+    ${CMAKE_SOURCE_DIR}/Third_Party/sqlite3
     ${CMAKE_SOURCE_DIR}/Third_Party
 )
 
@@ -92,6 +95,6 @@ add_executable(${CMAKE_PROJECT_NAME} src/main.cpp)
 target_link_libraries(${CMAKE_PROJECT_NAME}
     SQLiteCpp
     sqlite3
-    nfd
-    "-framework Foundation -framework AppKit"
+    # nfd
+    # "-framework Foundation -framework AppKit"
 )

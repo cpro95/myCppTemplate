@@ -3,26 +3,34 @@
 #include <string>
 #include <typeindex>
 #include <utility>
-#include "myDB_sqlite3-sqlitecpp.h"
+#include "myDB_sqlite3.h"
 #include "nlohmann/json.hpp"
 #include "spdlog/spdlog.h"
 #include "tabulate/table.hpp"
 
-void make_Table(tabulate::Table& table, nlohmann::json& movies_json) {
+int main() {
+  std::string query_string;
+  std::cout << "Search Movies with..." << '\n';
+  std::cin >> query_string;
+  // std::cout << query_string.length() << '\n';
+
+  nlohmann::json movies_json = getDBData(query_string);
+
+  tabulate::Table table;
+
   std::vector<std::string> movie_table_names{"idMovie", "title",     "subtitle",
                                              "summary", "premiered", "rating",
                                              "poster",  "fanart",    "strPath"};
 
-  // code snippet
-  // for (auto val : movies_json) {
-  //   for (auto val2 : val) {
-  //     std::cout << val2 << std::setw(4) << '\n';
+  //   for (auto val : movies_json) {
+  //     for (auto val2 : val) {
+  //       std::cout << val2 << std::setw(4) << '\n';
+  //     }
   //   }
-  // }
 
   // even easier with structured bindings (C++17)
-  // for (auto& [key, value] : movies_json[0].items()) {
-  //   table.add_row({key, value});
+  // for (auto &[key, value] : movies_json[0].items()) {
+  //    table.add_row({key, value});
   // }
 
   for (int i = 0; i < movies_json.size(); ++i) {
@@ -32,30 +40,19 @@ void make_Table(tabulate::Table& table, nlohmann::json& movies_json) {
     }
   }
 
-  // table style
+  // table styling
   for (int i = 0; i < movies_json.size(); ++i) {
     table[i * 10]
         .format()
         .font_background_color(tabulate::Color::blue)
         .font_color(tabulate::Color::white);
   }
-  // table width
+
   table[0][0].format().width(11);
   table[0][1].format().width(100);
-}
 
-int main() {
-  std::string query_string;
-  std::cout << "Search Movies with..." << '\n';
-  std::cin >> query_string;
-
-  nlohmann::json movies_json = getDBData(query_string);
-
-  tabulate::Table table;
-
-  make_Table(table, movies_json);
-
-  // std::cout << movies_json.dump() << std::endl;
   table.print(std::cout);
   std::cout << '\n' << "Total Count : " << movies_json.size() << '\n';
+
+  // std::cout << movies_json.dump(4) << std::endl;
 }
