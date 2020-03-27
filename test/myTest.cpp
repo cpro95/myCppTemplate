@@ -1,7 +1,7 @@
 #include "../src/lib/mySqlite3.h"
 #include "gtest/gtest.h"
 #include "nlohmann/json.hpp"
-#include "rapidxml.hpp"
+#include "rapidxml/rapidxml.hpp"
 
 std::string db_filename = "../../data/MyVideos116.db";
 

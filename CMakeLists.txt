@@ -7,6 +7,8 @@
 cmake_minimum_required(VERSION 3.1) # for "CMAKE_CXX_STANDARD" version
 project(myCppTemplate VERSION 2.0)
 
+set(This myCppTemplate)
+
 set(CMAKE_BUILD_TYPE Debug)
 
 # SQLiteC++ 3.x now requires C++11 compiler
@@ -50,7 +52,10 @@ set(SQLITECPP_INC
 
 # add sources of the wrapper as a "SQLiteCpp" static library
 add_library(SQLiteCpp STATIC ${SQLITECPP_SRC} ${SQLITECPP_INC})
-
+target_include_directories(SQLiteCpp PUBLIC 
+    ${CMAKE_SOURCE_DIR}/external/SQLiteCpp/include
+    ${CMAKE_SOURCE_DIR}/external/sqlite3
+)
 
 # Native File Dialog
 # list of sources files of the library
@@ -77,6 +82,7 @@ add_library(SQLiteCpp STATIC ${SQLITECPP_SRC} ${SQLITECPP_INC})
 # add library sqlite3
 add_library(sqlite3 STATIC
     ${CMAKE_SOURCE_DIR}/external/sqlite3/sqlite3.c
+    ${CMAKE_SOURCE_DIR}/external/sqlite3/sqlite3.h
 )
 
 # add library mySqlite3
@@ -84,24 +90,26 @@ add_library(mySqlite3 STATIC
     ${CMAKE_SOURCE_DIR}/src/lib/mySqlite3.cpp
 )
 
-# include directories
-include_directories(
+target_include_directories(mySqlite3
+    PUBLIC
+    ${PROJECT_SOURCE_DIR}/src/lib
     ${CMAKE_SOURCE_DIR}/external/SQLiteCpp/include
+    ${CMAKE_SOURCE_DIR}/external
+)
+
+# include directories for all scope
+# include_directories(
+    # ${CMAKE_SOURCE_DIR}/external/SQLiteCpp/include
     # ${CMAKE_SOURCE_DIR}/external/nativefiledialog/include
     # ${CMAKE_SOURCE_DIR}/external/nativefiledialog
-    ${CMAKE_SOURCE_DIR}/external/spdlog
-    ${CMAKE_SOURCE_DIR}/external/tabulate
-    ${CMAKE_SOURCE_DIR}/external/sqlite3
-    ${CMAKE_SOURCE_DIR}/external/CLI11
-    ${CMAKE_SOURCE_DIR}/external/rapidxml
-    ${CMAKE_SOURCE_DIR}/external
-    )
+    # ${CMAKE_SOURCE_DIR}/external
+    # )
 
 # Add main.cpp example source code to the executable
 add_executable(${CMAKE_PROJECT_NAME} src/main.cpp)
 
 # Link SQLiteCpp_example1 with SQLiteCpp
-target_link_libraries(${CMAKE_PROJECT_NAME}
+target_link_libraries(${This}
     SQLiteCpp
     sqlite3
     mySqlite3
