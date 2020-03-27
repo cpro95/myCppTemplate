@@ -78,15 +78,14 @@ add_library(sqlite3 STATIC
 # include directories
 include_directories(
     ${CMAKE_SOURCE_DIR}/Third_Party/SQLiteCpp/include
-    ${CMAKE_SOURCE_DIR}/Third_Party/RapidJson
     # ${CMAKE_SOURCE_DIR}/Third_Party/nativefiledialog/include
     # ${CMAKE_SOURCE_DIR}/Third_Party/nativefiledialog
     ${CMAKE_SOURCE_DIR}/Third_Party/spdlog
     ${CMAKE_SOURCE_DIR}/Third_Party/tabulate
-    ${CMAKE_SOURCE_DIR}/Third_Party/sqlite3pp
     ${CMAKE_SOURCE_DIR}/Third_Party/sqlite3
+    ${CMAKE_SOURCE_DIR}/Third_Party/CLI11
     ${CMAKE_SOURCE_DIR}/Third_Party
-)
+    )
 
 # Add main.cpp example source code to the executable
 add_executable(${CMAKE_PROJECT_NAME} src/main.cpp)

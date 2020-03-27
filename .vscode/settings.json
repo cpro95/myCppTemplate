@@ -80,6 +80,7 @@
         "valarray": "cpp",
         "variant": "cpp",
         "typeindex": "cpp",
-        "*.ipp": "cpp"
+        "*.ipp": "cpp",
+        "set": "cpp"
     }
 }
