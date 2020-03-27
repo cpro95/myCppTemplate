@@ -1,5 +1,5 @@
 /**
- * @file  myDB_sqlite3.h
+ * @file  mySqlite3.cpp
  * @brief A few short function about sqlite3 query
  *
  *  how-to use the Sqlite3pp wrapper
@@ -12,11 +12,11 @@
 #include <cstdlib>
 #include <iostream>
 #include "SQLiteCpp/SQLiteCpp.h"
-#include "nlohmann/json.hpp"
 #include "rapidxml/rapidxml.hpp"
 #include "spdlog/spdlog.h"
+#include "mySqlite3.h"
 
-static std::string getImageUrlFromXML(std::string path, unsigned int depth) {
+std::string getImageUrlFromXML(std::string path, unsigned int depth) {
   //   std::string xml_string = movies_json[0]["c08"];
   //   rapidxml::xml_document<> doc;
   //   doc.parse<0>((char *)xml_string.c_str());
@@ -49,7 +49,7 @@ static std::string getImageUrlFromXML(std::string path, unsigned int depth) {
   }
 }
 
-static int getDBTotal(std::string db_filename) {
+int getDBTotal(std::string db_filename) {
   try {
     SQLite::Database db(db_filename, SQLite::OPEN_READONLY);
     spdlog::info("SQLite database file '{}' opened successfully",
@@ -64,7 +64,7 @@ static int getDBTotal(std::string db_filename) {
   }
 }
 
-static nlohmann::json getDBData(std::string db_filename, std::string search_query) {
+nlohmann::json getDBData(std::string db_filename, std::string search_query) {
   nlohmann::json movies_json;
   nlohmann::json movie_json;
   nlohmann::json err_json = {

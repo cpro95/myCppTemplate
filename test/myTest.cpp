@@ -1,4 +1,4 @@
-#include "../src/my_SqliteCpp.h"
+#include "../src/lib/mySqlite3.h"
 #include "gtest/gtest.h"
 #include "nlohmann/json.hpp"
 #include "rapidxml.hpp"

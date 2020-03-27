@@ -79,6 +79,11 @@ add_library(sqlite3 STATIC
     ${CMAKE_SOURCE_DIR}/external/sqlite3/sqlite3.c
 )
 
+# add library mySqlite3
+add_library(mySqlite3 STATIC
+    ${CMAKE_SOURCE_DIR}/src/lib/mySqlite3.cpp
+)
+
 # include directories
 include_directories(
     ${CMAKE_SOURCE_DIR}/external/SQLiteCpp/include
@@ -99,6 +104,7 @@ add_executable(${CMAKE_PROJECT_NAME} src/main.cpp)
 target_link_libraries(${CMAKE_PROJECT_NAME}
     SQLiteCpp
     sqlite3
+    mySqlite3
     # nfd
     # "-framework Foundation -framework AppKit"
 )

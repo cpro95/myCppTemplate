@@ -4,7 +4,7 @@
 #include <typeindex>
 #include <utility>
 #include "CLI/CLI.hpp"
-#include "my_SqliteCpp.h"
+#include "lib/mySqlite3.h"
 #include "nlohmann/json.hpp"
 #include "spdlog/spdlog.h"
 #include "tabulate/table.hpp"
