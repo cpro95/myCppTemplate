@@ -13,6 +13,10 @@ set(CMAKE_BUILD_TYPE Debug)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+enable_testing()
+
+add_subdirectory(googletest)
+
 ## Build the C++ Wrapper ##
 
 # adding a new file require explicitly modifying the CMakeLists.txt
@@ -20,27 +24,27 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # list of sources files of the library
 set(SQLITECPP_SRC
- ${PROJECT_SOURCE_DIR}/Third_Party/SQLiteCpp/src/Backup.cpp
- ${PROJECT_SOURCE_DIR}/Third_Party/SQLiteCpp/src/Column.cpp
- ${PROJECT_SOURCE_DIR}/Third_Party/SQLiteCpp/src/Database.cpp
- ${PROJECT_SOURCE_DIR}/Third_Party/SQLiteCpp/src/Exception.cpp
- ${PROJECT_SOURCE_DIR}/Third_Party/SQLiteCpp/src/Statement.cpp
- ${PROJECT_SOURCE_DIR}/Third_Party/SQLiteCpp/src/Transaction.cpp
+ ${PROJECT_SOURCE_DIR}/external/SQLiteCpp/src/Backup.cpp
+ ${PROJECT_SOURCE_DIR}/external/SQLiteCpp/src/Column.cpp
+ ${PROJECT_SOURCE_DIR}/external/SQLiteCpp/src/Database.cpp
+ ${PROJECT_SOURCE_DIR}/external/SQLiteCpp/src/Exception.cpp
+ ${PROJECT_SOURCE_DIR}/external/SQLiteCpp/src/Statement.cpp
+ ${PROJECT_SOURCE_DIR}/external/SQLiteCpp/src/Transaction.cpp
 )
 # source_group(src FILES ${SQLITECPP_SRC})
 
 # list of header files of the library
 set(SQLITECPP_INC
- ${PROJECT_SOURCE_DIR}/Third_Party/SQLiteCpp/include/SQLiteCpp/SQLiteCpp.h
- ${PROJECT_SOURCE_DIR}/Third_Party/SQLiteCpp/include/SQLiteCpp/Assertion.h
- ${PROJECT_SOURCE_DIR}/Third_Party/SQLiteCpp/include/SQLiteCpp/Backup.h
- ${PROJECT_SOURCE_DIR}/Third_Party/SQLiteCpp/include/SQLiteCpp/Column.h
- ${PROJECT_SOURCE_DIR}/Third_Party/SQLiteCpp/include/SQLiteCpp/Database.h
- ${PROJECT_SOURCE_DIR}/Third_Party/SQLiteCpp/include/SQLiteCpp/Exception.h
- ${PROJECT_SOURCE_DIR}/Third_Party/SQLiteCpp/include/SQLiteCpp/Statement.h
- ${PROJECT_SOURCE_DIR}/Third_Party/SQLiteCpp/include/SQLiteCpp/Transaction.h
- ${PROJECT_SOURCE_DIR}/Third_Party/SQLiteCpp/include/SQLiteCpp/VariadicBind.h
- ${PROJECT_SOURCE_DIR}/Third_Party/SQLiteCpp/include/SQLiteCpp/ExecuteMany.h
+ ${PROJECT_SOURCE_DIR}/external/SQLiteCpp/include/SQLiteCpp/SQLiteCpp.h
+ ${PROJECT_SOURCE_DIR}/external/SQLiteCpp/include/SQLiteCpp/Assertion.h
+ ${PROJECT_SOURCE_DIR}/external/SQLiteCpp/include/SQLiteCpp/Backup.h
+ ${PROJECT_SOURCE_DIR}/external/SQLiteCpp/include/SQLiteCpp/Column.h
+ ${PROJECT_SOURCE_DIR}/external/SQLiteCpp/include/SQLiteCpp/Database.h
+ ${PROJECT_SOURCE_DIR}/external/SQLiteCpp/include/SQLiteCpp/Exception.h
+ ${PROJECT_SOURCE_DIR}/external/SQLiteCpp/include/SQLiteCpp/Statement.h
+ ${PROJECT_SOURCE_DIR}/external/SQLiteCpp/include/SQLiteCpp/Transaction.h
+ ${PROJECT_SOURCE_DIR}/external/SQLiteCpp/include/SQLiteCpp/VariadicBind.h
+ ${PROJECT_SOURCE_DIR}/external/SQLiteCpp/include/SQLiteCpp/ExecuteMany.h
 )
 # source_group(include FILES ${SQLITECPP_INC})
 
@@ -51,19 +55,19 @@ add_library(SQLiteCpp STATIC ${SQLITECPP_SRC} ${SQLITECPP_INC})
 # Native File Dialog
 # list of sources files of the library
 # set(NATIVEFILEDIALOG_SRC
-#     ${PROJECT_SOURCE_DIR}/Third_Party/nativefiledialog/nfd_common.c
-#     ${PROJECT_SOURCE_DIR}/Third_Party/nativefiledialog/nfd_cocoa.m
+#     ${PROJECT_SOURCE_DIR}/external/nativefiledialog/nfd_common.c
+#     ${PROJECT_SOURCE_DIR}/external/nativefiledialog/nfd_cocoa.m
 # )
-# list(APPEND SOURCES ${PROJECT_SOURCE_DIR}/Third_Party/nativefiledialog/nfd_win.cpp)
-# list(APPEND SOURCES ${PROJECT_SOURCE_DIR}/Third_Party/nativefiledialog/nfd_cocoa.m)
-# list(APPEND SOURCES ${PROJECT_SOURCE_DIR}/Third_Party/nativefiledialog/nfd_gtk.c)
+# list(APPEND SOURCES ${PROJECT_SOURCE_DIR}/external/nativefiledialog/nfd_win.cpp)
+# list(APPEND SOURCES ${PROJECT_SOURCE_DIR}/external/nativefiledialog/nfd_cocoa.m)
+# list(APPEND SOURCES ${PROJECT_SOURCE_DIR}/external/nativefiledialog/nfd_gtk.c)
 # message(FATAL_ERROR "Cannot detect your system, please report to https://github.com/aarcangeli/nativefiledialog-cmake/issues")
 # source_group(src FILES ${NATIVEFILEDIALOG_SRC})
 
 # list of header files of the library
 # set(NATIVEFILEDIALOG_INC
-#  ${PROJECT_SOURCE_DIR}/Third_Party/nativefiledialog/common.h
-#  ${PROJECT_SOURCE_DIR}/Third_Party/nativefiledialog/nfd_common.h
+#  ${PROJECT_SOURCE_DIR}/external/nativefiledialog/common.h
+#  ${PROJECT_SOURCE_DIR}/external/nativefiledialog/nfd_common.h
 # )
 # source_group(include FILES ${NATIVEFILEDIALOG_INC})
 
@@ -72,19 +76,20 @@ add_library(SQLiteCpp STATIC ${SQLITECPP_SRC} ${SQLITECPP_INC})
 
 # add library sqlite3
 add_library(sqlite3 STATIC
-    ${CMAKE_SOURCE_DIR}/Third_Party/sqlite3/sqlite3.c
+    ${CMAKE_SOURCE_DIR}/external/sqlite3/sqlite3.c
 )
 
 # include directories
 include_directories(
-    ${CMAKE_SOURCE_DIR}/Third_Party/SQLiteCpp/include
-    # ${CMAKE_SOURCE_DIR}/Third_Party/nativefiledialog/include
-    # ${CMAKE_SOURCE_DIR}/Third_Party/nativefiledialog
-    ${CMAKE_SOURCE_DIR}/Third_Party/spdlog
-    ${CMAKE_SOURCE_DIR}/Third_Party/tabulate
-    ${CMAKE_SOURCE_DIR}/Third_Party/sqlite3
-    ${CMAKE_SOURCE_DIR}/Third_Party/CLI11
-    ${CMAKE_SOURCE_DIR}/Third_Party
+    ${CMAKE_SOURCE_DIR}/external/SQLiteCpp/include
+    # ${CMAKE_SOURCE_DIR}/external/nativefiledialog/include
+    # ${CMAKE_SOURCE_DIR}/external/nativefiledialog
+    ${CMAKE_SOURCE_DIR}/external/spdlog
+    ${CMAKE_SOURCE_DIR}/external/tabulate
+    ${CMAKE_SOURCE_DIR}/external/sqlite3
+    ${CMAKE_SOURCE_DIR}/external/CLI11
+    ${CMAKE_SOURCE_DIR}/external/rapidxml
+    ${CMAKE_SOURCE_DIR}/external
     )
 
 # Add main.cpp example source code to the executable
@@ -97,3 +102,5 @@ target_link_libraries(${CMAKE_PROJECT_NAME}
     # nfd
     # "-framework Foundation -framework AppKit"
 )
+
+add_subdirectory(test)

@@ -16,7 +16,7 @@
 #include "rapidxml/rapidxml.hpp"
 #include "spdlog/spdlog.h"
 
-std::string getImageUrlFromXML(std::string path, unsigned int depth) {
+static std::string getImageUrlFromXML(std::string path, unsigned int depth) {
   //   std::string xml_string = movies_json[0]["c08"];
   //   rapidxml::xml_document<> doc;
   //   doc.parse<0>((char *)xml_string.c_str());
@@ -49,7 +49,7 @@ std::string getImageUrlFromXML(std::string path, unsigned int depth) {
   }
 }
 
-int getDBTotal(std::string db_filename) {
+static int getDBTotal(std::string db_filename) {
   try {
     SQLite::Database db(db_filename, SQLite::OPEN_READONLY);
     spdlog::info("SQLite database file '{}' opened successfully",
@@ -64,7 +64,7 @@ int getDBTotal(std::string db_filename) {
   }
 }
 
-nlohmann::json getDBData(std::string db_filename, std::string search_query) {
+static nlohmann::json getDBData(std::string db_filename, std::string search_query) {
   nlohmann::json movies_json;
   nlohmann::json movie_json;
   nlohmann::json err_json = {
