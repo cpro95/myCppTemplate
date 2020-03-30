@@ -10,7 +10,7 @@
 #include "tabulate/table.hpp"
 
 void make_Table(tabulate::Table& table, nlohmann::json& movies_json) {
-  const uint movie_table_size = 12;
+  const int movie_table_size = 12;
   std::vector<std::string> movie_table_names{
       "idMovie", "c00",       "c01",     "c03",    "c08",           "c19",
       "c20",     "premiered", "strPath", "rating", "uniqueid_value"};

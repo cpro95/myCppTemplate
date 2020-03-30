@@ -11,7 +11,6 @@ set(Sources
 add_executable(${This} ${Sources} ${Headers})
 
 target_link_libraries(${This} PUBLIC
-    gtest_main
     SQLiteCpp
     sqlite3
     mySqlite3
