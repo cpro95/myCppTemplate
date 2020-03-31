@@ -6,7 +6,7 @@ set(Sources
     myTest.cpp
 )
 
-# set(Headers ../src/xxx.h)
+set(Headers catch.hpp)
 
 add_executable(${This} ${Sources} ${Headers})
 
