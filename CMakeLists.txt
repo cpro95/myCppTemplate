@@ -19,10 +19,12 @@ enable_testing()
 
 # add_subdirectory(googletest)
 
-## Build the C++ Wrapper ##
 
-# adding a new file require explicitly modifying the CMakeLists.txt
-# so that CMake knows that it should rebuild the project (it is best practice)
+# add library sqlite3
+add_library(sqlite3 STATIC
+    ${CMAKE_SOURCE_DIR}/external/sqlite3/sqlite3.c
+    ${CMAKE_SOURCE_DIR}/external/sqlite3/sqlite3.h
+)
 
 # list of sources files of the library
 set(SQLITECPP_SRC
@@ -33,7 +35,6 @@ set(SQLITECPP_SRC
  ${PROJECT_SOURCE_DIR}/external/SQLiteCpp/src/Statement.cpp
  ${PROJECT_SOURCE_DIR}/external/SQLiteCpp/src/Transaction.cpp
 )
-# source_group(src FILES ${SQLITECPP_SRC})
 
 # list of header files of the library
 set(SQLITECPP_INC
@@ -48,7 +49,6 @@ set(SQLITECPP_INC
  ${PROJECT_SOURCE_DIR}/external/SQLiteCpp/include/SQLiteCpp/VariadicBind.h
  ${PROJECT_SOURCE_DIR}/external/SQLiteCpp/include/SQLiteCpp/ExecuteMany.h
 )
-# source_group(include FILES ${SQLITECPP_INC})
 
 # add sources of the wrapper as a "SQLiteCpp" static library
 add_library(SQLiteCpp STATIC ${SQLITECPP_SRC} ${SQLITECPP_INC})
@@ -79,11 +79,6 @@ target_include_directories(SQLiteCpp PUBLIC
 # add sources of the wrapper as a "NativeFileDialog" static library
 # add_library(nfd STATIC ${NATIVEFILEDIALOG_SRC} ${NATIVEFILEDIALOG_INC})
 
-# add library sqlite3
-add_library(sqlite3 STATIC
-    ${CMAKE_SOURCE_DIR}/external/sqlite3/sqlite3.c
-    ${CMAKE_SOURCE_DIR}/external/sqlite3/sqlite3.h
-)
 
 # add library mySqlite3
 add_library(mySqlite3 STATIC
@@ -97,24 +92,19 @@ target_include_directories(mySqlite3
     ${CMAKE_SOURCE_DIR}/external
 )
 
-# include directories for all scope
-# include_directories(
-    # ${CMAKE_SOURCE_DIR}/external/SQLiteCpp/include
-    # ${CMAKE_SOURCE_DIR}/external/nativefiledialog/include
-    # ${CMAKE_SOURCE_DIR}/external/nativefiledialog
-    # ${CMAKE_SOURCE_DIR}/external
-    # )
-
 # Add main.cpp example source code to the executable
 add_executable(${CMAKE_PROJECT_NAME} src/main.cpp)
 
+set_target_properties(${This} PROPERTIES LINK_FLAGS "-s DISABLE_EXCEPTION_CATCHING=0")
 # Link SQLiteCpp_example1 with SQLiteCpp
+# When linking, library order is important.
+# mySqlite3 <- SQLiteCpp <- sqlite3
 target_link_libraries(${This}
+    mySqlite3
     SQLiteCpp
     sqlite3
-    mySqlite3
-    # nfd
-    # "-framework Foundation -framework AppKit"
+#     # nfd
+#     # "-framework Foundation -framework AppKit"
 )
 
 add_subdirectory(test)

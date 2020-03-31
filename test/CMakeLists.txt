@@ -9,11 +9,14 @@ set(Sources
 set(Headers catch.hpp)
 
 add_executable(${This} ${Sources} ${Headers})
+set_target_properties(${This} PROPERTIES LINK_FLAGS "-s DISABLE_EXCEPTION_CATCHING=0")
 
+# When linking, library order is important.
+# mySqlite3 <- SQLiteCpp <- sqlite3
 target_link_libraries(${This} PUBLIC
+    mySqlite3
     SQLiteCpp
     sqlite3
-    mySqlite3
 )
 
 add_test(
